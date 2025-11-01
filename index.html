@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Reflection Questionnaire</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .purpose-section {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .purpose-title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1.3rem;
+            color: #000;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .purpose-text {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .how-to-use {
+            font-style: italic;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .form-container {
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .question-group {
+            margin-bottom: 2rem;
+            padding: 2.5rem;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(245, 245, 245, 0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(250, 250, 250, 0.6) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(248, 248, 248, 0.4) 0%, transparent 50%),
+                linear-gradient(135deg, #f8f9fa 0%, #f5f5f5 50%, #f0f0f0 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(220, 220, 220, 0.6);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.08),
+                inset 0 1px 3px rgba(255, 255, 255, 0.8),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .question-group::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.01) 2px,
+                    rgba(0, 0, 0, 0.01) 4px
+                ),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.01) 2px,
+                    rgba(0, 0, 0, 0.01) 4px
+                );
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .question-group:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 4px rgba(255, 255, 255, 0.9),
+                inset 0 -1px 3px rgba(0, 0, 0, 0.08);
+            background:
+                radial-gradient(circle at 20% 80%, rgba(250, 250, 250, 0.9) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.7) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(252, 252, 252, 0.5) 0%, transparent 50%),
+                linear-gradient(135deg, #fafafa 0%, #f7f7f7 50%, #f2f2f2 100%);
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            color: #a855f7;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 20px;
+        }
+
+        .question {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1.2rem;
+            color: #000;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .question-explanation {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .examples {
+            background:
+                radial-gradient(circle at 30% 70%, rgba(245, 245, 245, 0.7) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(250, 250, 250, 0.5) 0%, transparent 50%),
+                linear-gradient(125deg, #f5f5f5 0%, #f0f0f0 50%, #ebebeb 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(215, 215, 215, 0.6);
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .examples::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                repeating-linear-gradient(
+                    30deg,
+                    transparent,
+                    transparent 1px,
+                    rgba(0, 0, 0, 0.008) 1px,
+                    rgba(0, 0, 0, 0.008) 3px
+                );
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        .examples-title {
+            font-size: 0.85rem;
+            color: #475569;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .example {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.3rem;
+            font-style: italic;
+        }
+
+        .example:before {
+            content: "• ";
+            color: #a855f7;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid rgba(226, 232, 240, 0.8);
+            border-radius: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1rem;
+            color: #333;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        textarea::placeholder {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .closing-section {
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .closing-title {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 1.2rem;
+            color: #000;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .closing-text {
+            font-size: 1rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Magical floating particles effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(168, 85, 247, 0.3);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+
+            .question-group {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 2.5s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Protocol Reflection Questionnaire</h1>
+            <p class="subtitle">Reflecting on Your First Walk</p>
+        </div>
+
+        <div class="purpose-section">
+            <h2 class="purpose-title">Purpose</h2>
+            <p class="purpose-text">This questionnaire helps you reflect on your experience using a protocol for the first time. Your responses reveal how you naturally engage with structured reflection and what matters most in your decision-making process.</p>
+
+            <h3 class="purpose-title">How to Use</h3>
+            <p class="how-to-use">Take your time with each question. There are no right or wrong answers — just notice what feels true for you. Even small observations matter.</p>
+        </div>
+
+        <form name="field-questionnaire" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" class="form-container">
+            <input type="hidden" name="form-name" value="field-questionnaire" />
+            <p style="display: none;">
+                <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
+            <!-- Question 1 -->
+            <div class="question-group">
+                <div class="question-number">Question 1</div>
+                <h3 class="question">What was it like using a protocol for the first time?</h3>
+                <p class="question-explanation">The first experience often reveals how you naturally approach reflection — whether it felt easy, strange, helpful, or surprising. This helps you understand your own rhythm with structured thinking.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"I liked having something to guide me — it stopped me overthinking."</div>
+                    <div class="example">"It felt a bit weird talking to AI at first, but I got into it."</div>
+                    <div class="example">"It was calmer than I expected — it made things clearer without forcing a decision."</div>
+                </div>
+                <textarea name="question1" placeholder="Reflect on your first experience..." required></textarea>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-group">
+                <div class="question-number">Question 2</div>
+                <h3 class="question">What stood out most from the process?</h3>
+                <p class="question-explanation">Highlighting what caught your attention helps surface the real insight or turning point of the session.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"I noticed I already knew my answer — I just hadn't said it out loud."</div>
+                    <div class="example">"Seeing the outcomes written down helped me recognise where I actually am."</div>
+                    <div class="example">"I realised how much my energy drops when I ignore my gut."</div>
+                </div>
+                <textarea name="question2" placeholder="What caught your attention?" required></textarea>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-group">
+                <div class="question-number">Question 3</div>
+                <h3 class="question">How did the AI feel as a reflection partner?</h3>
+                <p class="question-explanation">Your reaction to the AI — whether comfortable, awkward, or surprisingly natural — helps shape how to use it next time.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"It was more neutral than a person, which made it easier to be honest."</div>
+                    <div class="example">"It felt a bit robotic at first, but it stayed consistent."</div>
+                    <div class="example">"It actually helped me stay focused instead of spiralling."</div>
+                </div>
+                <textarea name="question3" placeholder="Share your experience with AI as a partner..." required></textarea>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-group">
+                <div class="question-number">Question 4</div>
+                <h3 class="question">Did anything shift in your clarity or confidence after completing it?</h3>
+                <p class="question-explanation">This question checks whether the process actually moved something — big or small. Even a subtle shift matters.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"I'm clearer that I'm not ready to move yet."</div>
+                    <div class="example">"I don't feel stuck anymore — I just need more information."</div>
+                    <div class="example">"I realised the decision doesn't have to be perfect to be right."</div>
+                </div>
+                <textarea name="question4" placeholder="Notice any shifts, big or small..." required></textarea>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-group">
+                <div class="question-number">Question 5</div>
+                <h3 class="question">What would you change or keep the same next time you use a protocol?</h3>
+                <p class="question-explanation">Every walk teaches you something about how you like to reflect. Capturing that now improves the next experience.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"I'd take more time with the questions instead of rushing through."</div>
+                    <div class="example">"It worked best when I spoke my answers out loud first."</div>
+                    <div class="example">"I'd like to try it on something more personal next time."</div>
+                </div>
+                <textarea name="question5" placeholder="What would you adjust or keep?" required></textarea>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-group">
+                <div class="question-number">Question 6</div>
+                <h3 class="question">One sentence summary — what did this experience show you about how you make decisions?</h3>
+                <p class="question-explanation">A simple sentence anchors the learning — not about the job, but about how you think and act under uncertainty.</p>
+                <div class="examples">
+                    <div class="examples-title">Examples:</div>
+                    <div class="example">"I usually already know the answer; I just need space to hear it."</div>
+                    <div class="example">"I tend to rush decisions when I'm uncomfortable."</div>
+                    <div class="example">"I'm more confident when I slow down and name what matters."</div>
+                </div>
+                <textarea name="question6" placeholder="Sum it up in one sentence..." required></textarea>
+            </div>
+
+            <div class="closing-section">
+                <h3 class="closing-title">Thank You</h3>
+                <p class="closing-text">Your reflections help us understand how protocols work in practice and what makes them useful. This feedback shapes how we design future experiences.</p>
+            </div>
+
+            <div class="submit-container">
+                <button type="submit" class="submit-btn">Submit Your Reflection</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Add some gentle interactive magic
+        document.addEventListener('DOMContentLoaded', function() {
+            const questionGroups = document.querySelectorAll('.question-group');
+
+            questionGroups.forEach((group, index) => {
+                group.style.opacity = '0';
+                group.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    group.style.transition = 'all 0.6s ease';
+                    group.style.opacity = '1';
+                    group.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+
+            // Smooth scroll on focus
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('focus', function() {
+                    this.parentElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
